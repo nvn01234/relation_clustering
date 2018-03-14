@@ -16,12 +16,6 @@ def main():
                 vec = word2vec.word_vec(w)
                 vec = list(map(str, vec))
                 vectors.append("\t".join(vec))
-            elif w.replace(" ", "_") in word2vec:
-                w = w.replace(" ", "_")
-                metadata.append(w)
-                vec = word2vec.word_vec(w)
-                vec = list(map(str, vec))
-                vectors.append("\t".join(vec))
     del word2vec
 
     print("saving data")
