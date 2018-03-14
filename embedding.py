@@ -1,9 +1,9 @@
-from gensim.models import KeyedVectors
+from gensim.models.wrappers import FastText
 
 
 def main():
     print("read word embeddings")
-    word2vec = KeyedVectors.load_word2vec_format("data/embeddings/wiki.vi.bin", binary=True).wv
+    word2vec = FastText.load_fasttext_format("data/embeddings/wiki.vi.bin").wv
 
     print("read relations")
 
