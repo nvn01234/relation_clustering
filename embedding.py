@@ -6,19 +6,31 @@ def main():
     word2vec = FastText.load_fasttext_format("data/embeddings/wiki.vi.bin").wv
 
     print("read relations")
-
-    with open("data/RelationNormalize.txt", "r", encoding="utf8") as fin, \
-         open("data/relations_x.txt", "w", encoding="utf8") as fx, \
-         open("data/relations_y.txt", "w", encoding="utf8") as fy:
-        for line in fin:
+    vectors = []
+    metadata = []
+    with open("data/RelationNormalize.txt", "r", encoding="utf8") as f:
+        for line in f:
             w = line.strip().lower()
             if w in word2vec:
-                fx.write(w)
-                fy.write(" ".join(list(map(str, word2vec.word_vec(w)))) + "\n")
+                metadata.append(w)
+                vec = word2vec.word_vec(w)
+                vec = list(map(str, vec))
+                vectors.append("\t".join(vec))
             elif w.replace(" ", "_") in word2vec:
                 w = w.replace(" ", "_")
-                fx.write(w)
-                fy.write(" ".join(list(map(str, word2vec.word_vec(w)))) + "\n")
+                metadata.append(w)
+                vec = word2vec.word_vec(w)
+                vec = list(map(str, vec))
+                vectors.append("\t".join(vec))
+    del word2vec
+
+    print("saving data")
+    with open("data/vectors.txt", "w", encoding="utf8") as f:
+        f.write("\n".join(vectors))
+    del vectors
+    with open("data/metadata.txt", "w", encoding="utf8") as f:
+        f.write("\n".join(metadata))
+    del metadata
 
 
 if __name__ == "__main__":
