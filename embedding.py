@@ -14,11 +14,11 @@ def main():
             w = line.strip().lower()
             if w in word2vec:
                 fx.write(w)
-                fy.write(" ".join(list(word2vec.word_vec(w))) + "\n")
+                fy.write(" ".join(list(map(str, word2vec.word_vec(w)))) + "\n")
             elif w.replace(" ", "_") in word2vec:
                 w = w.replace(" ", "_")
                 fx.write(w)
-                fy.write(" ".join(list(word2vec.word_vec(w))) + "\n")
+                fy.write(" ".join(list(map(str, word2vec.word_vec(w)))) + "\n")
 
 
 if __name__ == "__main__":
