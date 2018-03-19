@@ -24,9 +24,9 @@ def calculate_distance_matrix():
 def clustering():
     vectors = np.loadtxt("data/vectors.txt")
     eps = 10
-    min_samples = 5
+    min_samples = 10
     print("eps: %.4f" % eps)
-    clusterer = DBSCAN(eps=eps, min_samples=5).fit(vectors)
+    clusterer = DBSCAN(eps=eps, min_samples=min_samples).fit(vectors)
     labels = np.array(clusterer.labels_, dtype='int32')
     np.savetxt("data/clusters.txt", labels, fmt="%d")
 
