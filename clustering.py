@@ -9,7 +9,7 @@ N_CLUSTERS = 50
 def calculate_distance_matrix():
     vectors = np.loadtxt("data/vectors.txt")
     distance_matrix = np.zeros([len(vectors), len(vectors)])
-    distances = [[]]
+    distances = []
     for i in range(len(vectors) - 1):
         for j in range(i+1, len(vectors)):
             v1 = vectors[i]
