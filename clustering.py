@@ -21,29 +21,15 @@ def calculate_distance_matrix():
     np.save("data/distances.npy", distances)
     print("max distance: %.4f, average distance: %.4f, min distance: %.4f" % (np.max(distances), np.average(distances), np.min(distances)))
 
-def main():
+def clustering():
     vectors = np.loadtxt("data/vectors.txt")
-    distance_matrix = np.load("data/distance_matrix.npy")
-    min_dis = np.min(distance_matrix)
-    clusterer = DBSCAN(eps=min_dis).fit(vectors)
+    distances = np.load("data/distances.npy")
+    eps = np.average(distances)
+    clusterer = DBSCAN(eps=eps).fit(vectors)
     labels = clusterer.labels_
-    # with open("data/metadata.txt", "r", encoding="utf8") as f:
-    #     metadata = [l.strip() for l in f.readlines()]
-    #
-    # for f in glob.glob("data/clusters/*.txt"):
-    #     os.remove(f)
-    # if not os.path.exists("data/clusters"):
-    #     os.mkdir("data/clusters")
-    # for cluster in range(N_CLUSTERS):
-    #     cluster_data = []
-    #     for label, word in zip(labels, metadata):
-    #         if label == cluster:
-    #             cluster_data.append(word)
-    #     with open("data/clusters/cluster_%d.txt" % cluster, "w", encoding="utf8") as f:
-    #         f.write("\n".join(cluster_data))
-    print("")
+    np.savetxt("data/cluters.txt", labels)
 
 
 if __name__ == "__main__":
-    calculate_distance_matrix()
-    # main()
+    # calculate_distance_matrix()
+    clustering()
