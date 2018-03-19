@@ -25,9 +25,10 @@ def clustering():
     vectors = np.loadtxt("data/vectors.txt")
     distances = np.load("data/distances.npy")
     eps = np.average(distances)
-    clusterer = DBSCAN(eps=eps).fit(vectors)
-    labels = clusterer.labels_
-    np.savetxt("data/cluters.txt", labels)
+    print("eps: %.4f" % eps)
+    clusterer = DBSCAN(eps=eps, min_samples=3).fit(vectors)
+    labels = np.array(clusterer.labels_, dtype='int32')
+    np.savetxt("data/clusters.txt", labels, fmt="%d")
 
 
 if __name__ == "__main__":
