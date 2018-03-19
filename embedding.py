@@ -11,7 +11,7 @@ def main():
     with open("data/RelationNormalize.txt", "r", encoding="utf8") as f:
         for line in f:
             w = line.strip().lower()
-            if w in word2vec:
+            if w in word2vec and w not in metadata:
                 metadata.append(w)
                 vec = word2vec.word_vec(w)
                 vec = list(map(str, vec))
