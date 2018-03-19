@@ -2,6 +2,7 @@ from sklearn.cluster import KMeans, DBSCAN
 import numpy as np
 import os
 import glob
+from scipy.spatial import distance
 
 N_CLUSTERS = 50
 
@@ -12,14 +13,16 @@ def calculate_distance_matrix():
         for j in range(i+1, len(vectors)):
             v1 = vectors[i]
             v2 = vectors[j]
-            distance_matrix[i, j] = distance_matrix[j, i] = np.linalg.norm(v1 - v2)
-    np.save("data/distance_matrix.txt", distance_matrix)
-    print("max distance: %.4f, average distance: %.4f" % (np.max(distance_matrix), np.average(distance_matrix)))
+            distance_matrix[i, j] = distance_matrix[j, i] = distance.euclidean(v1, v2)
+    np.save("data/distance_matrix.npy", distance_matrix)
+    print("max distance: %.4f, average distance: %.4f, min distance: %.4f" % (np.max(distance_matrix), np.average(distance_matrix), np.min(distance_matrix)))
 
 def main():
-
-    # clusterer = DBSCAN(eps=1, min_samples=5).fit(vectors)
-    # labels = clusterer.labels_
+    vectors = np.loadtxt("data/vectors.txt")
+    distance_matrix = np.load("data/distance_matrix.npy")
+    min_dis = np.min(distance_matrix)
+    clusterer = DBSCAN(eps=min_dis).fit(vectors)
+    labels = clusterer.labels_
     # with open("data/metadata.txt", "r", encoding="utf8") as f:
     #     metadata = [l.strip() for l in f.readlines()]
     #
@@ -39,3 +42,4 @@ def main():
 
 if __name__ == "__main__":
     calculate_distance_matrix()
+    # main()
