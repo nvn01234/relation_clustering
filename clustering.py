@@ -23,10 +23,10 @@ def calculate_distance_matrix():
 
 def clustering():
     vectors = np.loadtxt("data/vectors.txt")
-    distances = np.load("data/distances.npy")
-    eps = np.average(distances)
+    eps = 10
+    min_samples = 5
     print("eps: %.4f" % eps)
-    clusterer = DBSCAN(eps=eps, min_samples=3).fit(vectors)
+    clusterer = DBSCAN(eps=eps, min_samples=5).fit(vectors)
     labels = np.array(clusterer.labels_, dtype='int32')
     np.savetxt("data/clusters.txt", labels, fmt="%d")
 
